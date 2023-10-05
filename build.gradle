@@ -1,11 +1,19 @@
-apply plugin: 'java'
+// apply plugin: 'java'
+
+plugins {
+    id "java"
+    id "org.springframework.boot" version "3.1.4"
+}
+
+apply plugin: 'io.spring.dependency-management'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation "joda-time:joda-time:2.2"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     testImplementation "junit:junit:4.12"
 }
 
@@ -16,4 +24,12 @@ jar {
 
 test {
     useJUnitPlatform()
+}
+
+task vui {
+    doLast {
+        String viu = "ABCEDEF"
+        
+        println 'Vui Ve Qua Nhi ' + viu.toLowerCase()
+    }
 }

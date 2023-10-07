@@ -3,18 +3,14 @@ package com.trung.springredisapp.payload;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NonNull;
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 @Getter
 @Setter
-public class Message {
+public class ChatControllerMessage {
     @NonNull
-    private String from;
+    private MessageType type;
     @NonNull
-    private int date;
+    private User user;
     @NonNull
-    private String message;
-    @NonNull
-    private String roomId;
+    private String data;
 }

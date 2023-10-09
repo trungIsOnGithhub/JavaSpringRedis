@@ -32,8 +32,8 @@ public class AuthController {
 
         User user = usersRepository.getUserByName(username);
 
-        if (Objects.isNull(user) ){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if ( Objects.isNull(user) ){
+            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
 
         Gson gson = new Gson();

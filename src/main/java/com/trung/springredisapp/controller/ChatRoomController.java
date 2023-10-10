@@ -36,9 +36,9 @@ public class ChatRoomController {
 
         for (String roomId : roomIds) {
             if( roomsRepository.isRoomExists(roomId) ) {
-                String name = roomsRepository.getRoomNameById(roomId);
+                String roomName = roomsRepository.getRoomNameById(roomId);
 
-                Room chatRoom = createChatRoom(roomId);
+                Room chatRoom = createChatRoom(roomId, roomName);
 
                 if( Objects.isNull(chatRoom) ) {
                     return new ResponseEntity<List<Room>>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -90,7 +90,7 @@ public class ChatRoomController {
         for(String userId : allUserIds) {
             User userFromId = usersRepository.getUserById(Integer.parseInt(userIds[1]));
 
-            if ( Objects.isNull(userFromId) ) { // inexist user or private chat room
+            if ( Objects.isNull(userFromId) ) { // inexist user
                 return null;
             }
 

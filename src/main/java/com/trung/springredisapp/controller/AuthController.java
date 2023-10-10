@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpSession;
 
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/auth")

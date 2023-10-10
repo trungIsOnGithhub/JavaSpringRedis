@@ -1,5 +1,7 @@
 package com.trung.springredisapp.controller;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping(value = "/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ChatRoomController {

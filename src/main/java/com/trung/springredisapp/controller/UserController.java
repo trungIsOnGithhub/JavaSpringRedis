@@ -1,5 +1,7 @@
 package com.trung.springredisapp.controller;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
@@ -16,7 +18,6 @@ public class UserController {
         for (Integer id : ids) {
             User user = usersRepository.getUserById(id);
             if (user == null){
-                LOGGER.debug("User not found by id: "+id);
                 return new ResponseEntity<>(new HashMap<>(), HttpStatus.BAD_REQUEST);
             }
             usersMap.put(String.valueOf(user.getId()), user);
@@ -35,7 +36,6 @@ public class UserController {
     public ResponseEntity<User> getMe(Model model, HttpSession session) {
         String user = (String) session.getAttribute(SessionAttrs.CHAT_USER_NAME);
         if (user == null){
-            LOGGER.debug("User not found in session by attribute: "+SessionAttrs.CHAT_USER_NAME);
             return new ResponseEntity<>(null, HttpStatus.OK);
         }
         Gson gson = new Gson();

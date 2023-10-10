@@ -17,7 +17,7 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 
 
 @Configuration
-public class RedisAppConfig {
+public class RedisConfig {
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")
     @Primary

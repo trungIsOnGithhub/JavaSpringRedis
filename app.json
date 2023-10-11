@@ -1,0 +1,20 @@
+{
+    "name": "Java Spring Redis chat",
+    "description": "Building Chat app using Redis and Java",
+    "image": "heroku/java",
+    "repository": "https://github.com/redis-developer/basic-redis-app-demo-java",
+    "logo": "https://redis.io/images/redis-white.png",
+    "keywords": ["java", "chat", "redis", "redis cloud" ],
+    "addons": ["rediscloud:30"],
+    "env": {
+      "REDIS_ENDPOINT_URL": {
+        "description": "A Redis cloud endpoint URL.",
+        "required": true
+      },
+      "REDIS_PASSWORD": {
+        "description": "A Redis password.",
+        "required": true
+      }
+    },
+    "stack": "container"
+  }

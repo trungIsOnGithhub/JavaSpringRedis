@@ -1,4 +1,7 @@
-package com.redisjava.chatapp;
+package com.trung.springredisapp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Collections;
 

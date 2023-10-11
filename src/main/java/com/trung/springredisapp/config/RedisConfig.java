@@ -1,6 +1,6 @@
 package com.trung.springredisapp.config;
 
-import com.trung.springredisapp.service.RedisMessageSubscriber;
+import com.trung.springredisapp.redis.RedisMessageSubscriber;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -15,6 +15,7 @@ import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 
+import java.util.Objects;
 
 @Configuration
 public class RedisConfig {
@@ -46,11 +47,13 @@ public class RedisConfig {
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        String host = null, port = null
+        String host = null, port = null,
                 endpointUrl = null, password = null;
 
-        String endpointUrl = System.getenv("REDIS_ENDPOINT_URL");
-        String password = System.getenv("REDIS_PASSWORD");
+        endpointUrl = System.getenv("REDIS_ENDPOINT_URL");
+        if(endpointUrl == null)
+            endpointUrl = "127.0.0.1:6379";
+
 
         String[] urlParts = endpointUrl.split(":");
 
@@ -59,27 +62,13 @@ public class RedisConfig {
             port = urlParts[1];
         }
 
-        this.fallbackIfNoValue(endpointUrl, password, host, port);
-
+        System.out.println(host + "|" + port);
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(host, Integer.parseInt(port));
 
-        config.setPassword(password);
+        password = System.getenv("REDIS_PASSWORD");
+        if( Objects.nonNull(password) )
+            config.setPassword(password);
 
         return new LettuceConnectionFactory(config);
-    }
-
-    private void fallbackIfNoValue(String endpointUrl, String password, String host, String port) {
-        if(endpointUrl == null) {
-            endpointUrl = "127.0.0.1:6379";
-        }
-        if(password == null) {
-            endpointUrl = "1234";
-        }
-        if(host == null) {
-            host = "127.0.0.1";
-        }
-        if(port == null) {
-            port = "6379";
-        }
     }
 }

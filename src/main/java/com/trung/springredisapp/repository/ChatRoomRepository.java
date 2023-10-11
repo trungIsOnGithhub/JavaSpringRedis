@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Set;
 
 @Repository
-public class RoomsRepository {
+public class ChatRoomRepository {
     @Autowired
     private StringRedisTemplate redisTemplate;
 

@@ -88,8 +88,6 @@ Each user has a set of rooms associated with them.
 
 After initialization, a pub/sub subscription is created: `SUBSCRIBE MESSAGES`. At the same time, each server instance will run a listener on a message on this channel to receive real-time updates.
 
-Again, for simplicity, each message is serialized to **_JSON_**, which we parse and then handle in the same manner, as WebSocket messages.
-
 Pub/sub allows connecting multiple servers written in different platforms without taking into consideration the implementation detail of each server.
 
 #### How the data is stored:

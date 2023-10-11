@@ -1,0 +1,1 @@
+./mvwn spring-boot:run

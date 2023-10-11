@@ -82,7 +82,11 @@ public class ChatRoomController {
         return allUserIds;
     }
 
-    private Room createChatRoom(String roomId){
+    private Room createChatRoom(String roomId, String roomName) {
+        if( Objects.notNull(roomName) ) {
+            return new ChatRoom(roomId, roomName);
+        }
+
         String[] allUserIds = getAllUserIds(roomId);
 
         List<String> allUserNames = ArrayList<String>();

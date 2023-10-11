@@ -2,9 +2,10 @@ package com.trung.springredisapp.controller;
 
 import com.google.gson.Gson;
 import com.trung.springredisapp.model.*;
-import com.trung.springredisapp.repository.RoomsRepository;
+import com.trung.springredisapp.payload.MessageType;
+import com.trung.springredisapp.repository.ChatRoomRepository;
 import com.trung.springredisapp.repository.UsersRepository;
-import com.trung.springredisapp.service.RedisMessageSubscriber;
+import com.trung.springredisapp.redis.RedisMessageSubscriber;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.listener.ChannelTopic;
@@ -22,15 +23,14 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
-
 @RestController
-@RequestMapping("/chat")
+@RequestMapping(value = "/chat")
 public class ChatController {
     @Autowired
     private UsersRepository usersRepository;
 
     @Autowired
-    private RoomsRepository roomsRepository;
+    private ChatRoomRepository roomsRepository;
 
     @Autowired
     ChannelTopic topic;
@@ -38,24 +38,24 @@ public class ChatController {
     @Autowired
     MessageListenerAdapter messageListener;
 
-    static Function<String, Integer> streamEndpointHandler = (String message) -> {
-        SseEmitter.SseEventBuilder event = SseEmitter.event().data(message);
-
-        try {
-            emitter.send(event);
-        } catch (IOException e) {
-            // This may occur when the client was disconnected.
-            return 1;
-        }
-        return 0;
-    };
-
-    @RequestMapping("/stream")
+    @RequestMapping(value = "/stream")
     public SseEmitter streamSseMvc(@RequestParam int userId) {
         AtomicBoolean isComplete = new AtomicBoolean(false);
         SseEmitter emitter = new SseEmitter();
 
-        RedisMessageSubscriber redisMessageSubscriber = (RedisMessageSubscriber) messageListener.getDelegate()
+        Function<String, Integer> streamEndpointHandler = (String message) -> {
+            SseEmitter.SseEventBuilder event = SseEmitter.event().data(message);
+
+            try {
+                emitter.send(event);
+            } catch (IOException e) {
+                // This may occur when the client was disconnected.
+                return 1;
+            }
+            return 0;
+        };
+
+        RedisMessageSubscriber redisMessageSubscriber = (RedisMessageSubscriber) messageListener.getDelegate();
                                 redisMessageSubscriber.attach(streamEndpointHandler);
 
         Runnable onDetach = () -> {

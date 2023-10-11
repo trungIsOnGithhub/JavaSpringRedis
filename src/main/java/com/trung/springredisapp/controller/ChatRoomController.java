@@ -5,9 +5,7 @@ import com.trung.springredisapp.model.Message;
 import com.trung.springredisapp.model.ChatRoom;
 import com.trung.springredisapp.model.User;
 import com.trung.springredisapp.repository.ChatRoomRepository;
-import com.redisdeveloper.basicchat.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.trung.springredisapp.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
@@ -15,44 +13,45 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.*;
 import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ChatRoomController {
     @Autowired
-    private UserRepository usersRepository;
+    private UsersRepository usersRepository;
     @Autowired
     private ChatRoomRepository roomsRepository;
 
     @GetMapping(value = "/user/{userId}")
-    public ResponseEntity<List<Room>> getRooms(@PathVariable("userId") int userId) {
+    public ResponseEntity<List<ChatRoom>> getRooms(@PathVariable("userId") int userId) {
         Set<String> roomIds = roomsRepository.getUserRoomIds(userId);
-        List<Room> rooms = new ArrayList<>();
+        List<ChatRoom> rooms = new ArrayList<>();
 
         if (roomIds == null) {
-            return new ResponseEntity<List<Room>>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<List<ChatRoom>>(HttpStatus.BAD_REQUEST);
         }
 
         for (String roomId : roomIds) {
             if( roomsRepository.isRoomExists(roomId) ) {
                 String roomName = roomsRepository.getRoomNameById(roomId);
 
-                Room chatRoom = createChatRoom(roomId, roomName);
+                ChatRoom chatRoom = createChatRoom(roomId, roomName);
 
                 if( Objects.isNull(chatRoom) ) {
-                    return new ResponseEntity<List<Room>>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+                    return new ResponseEntity<List<ChatRoom>>(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
                 
                 rooms.add(chatRoom);
             }
         }
-        return new ResponseEntity<>(rooms, HttpStatus.OK);
+        return new ResponseEntity<List<ChatRoom>>(rooms, HttpStatus.OK);
     }
 
 
     @GetMapping(value = "/{roomId}")
-    public ResponseEntity<List<Message>> getRoomMessages(@PathVariable("roomId") Long roomId,
+    public ResponseEntity<List<Message>> getRoomMessages(@PathVariable("roomId") String roomId,
                                                             @RequestParam("offset") Integer offset,
                                                             @RequestParam("size") Integer size ) {
         List<Message> messages = new ArrayList<>();
@@ -69,7 +68,7 @@ public class ChatRoomController {
     }
 
     private String[] getAllUserIds(String roomId){
-        if( roomId.indexOf(':') ) {
+        if( roomId.indexOf(':') < 1 ) {
             throw new RuntimeException("Canot get user id from wrong roomId input!!");
         }
 
@@ -82,17 +81,17 @@ public class ChatRoomController {
         return allUserIds;
     }
 
-    private Room createChatRoom(String roomId, String roomName) {
-        if( Objects.notNull(roomName) ) {
+    private ChatRoom createChatRoom(String roomId, String roomName) {
+        if( Objects.nonNull(roomName) ) {
             return new ChatRoom(roomId, roomName);
         }
 
         String[] allUserIds = getAllUserIds(roomId);
 
-        List<String> allUserNames = ArrayList<String>();
+        List<String> allUserNames = new ArrayList<String>();
 
         for(String userId : allUserIds) {
-            User userFromId = usersRepository.getUserById(Integer.parseInt(userIds[1]));
+            User userFromId = usersRepository.getUserById(Integer.parseInt(userId));
 
             if ( Objects.isNull(userFromId) ) { // inexist user
                 return null;

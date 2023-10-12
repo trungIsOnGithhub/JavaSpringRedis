@@ -50,7 +50,7 @@ public class ChatRoomController {
     }
 
 
-    @GetMapping(value = "/{roomId}")
+    @GetMapping(value = "/messages/{roomId}")
     public ResponseEntity<List<Message>> getRoomMessages(@PathVariable("roomId") String roomId,
                                                             @RequestParam("offset") Integer offset,
                                                             @RequestParam("size") Integer size ) {

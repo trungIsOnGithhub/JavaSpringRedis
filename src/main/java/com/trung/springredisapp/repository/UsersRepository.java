@@ -48,8 +48,10 @@ public class UsersRepository {
 
         Objects.requireNonNull(userKey);
 
+        int userId = parseUserId(userKey);
+
         boolean isOnline = isUserOnline(
-            String.valueOf( parseUserId(userKey) )
+            String.valueOf(userId)
         );
         // all the info needed to store the valid user object into session.
         return new User(userId, username, isOnline);

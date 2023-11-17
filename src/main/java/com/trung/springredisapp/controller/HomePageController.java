@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
-@RequestMapping("/")
-public class RootController {
+@RequestMapping(value = "/")
+public class HomePageController {
     public RedirectView homepage() {
         return new RedirectView("/index.html");
     }

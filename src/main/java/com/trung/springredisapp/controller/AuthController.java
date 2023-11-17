@@ -1,12 +1,10 @@
 package com.trung.springredisapp.controller;
 
 import com.google.gson.Gson;
-import com.trung.springredisapp.config.SessionAttrs;
+import com.trung.springredisapp.config.SessionConfig;
 import com.trung.springredisapp.payload.LoginDTO;
 import com.trung.springredisapp.model.User;
 import com.trung.springredisapp.repository.UsersRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +16,12 @@ import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping(value = "/auth")
 public class AuthController {
     @Autowired
     private UsersRepository usersRepository;
 
-    @PostMapping(name = "/login")
+    @PostMapping(value = "/login")
     public ResponseEntity<User> login(@RequestBody LoginDTO loginDto, HttpSession session) {
         String username = loginDto.getUsername();
 
@@ -38,7 +36,7 @@ public class AuthController {
         }
 
         Gson gson = new Gson();
-        session.setAttribute(SessionAttrs.CHAT_USER_NAME, gson.toJson(user));
+        session.setAttribute(SessionConfig.CHAT_USER_NAME, gson.toJson(user));
 
         user.setOnline(true);
 
@@ -46,11 +44,11 @@ public class AuthController {
     }
 
 
-    @PostMapping(name = "/logout")
+    @PostMapping(value = "/logout")
     public ResponseEntity<Object> logout(Model model, HttpSession session) {
-        Object user = session.getAttribute(SessionAttrs.CHAT_USER_NAME);
+        Object user = session.getAttribute(SessionConfig.CHAT_USER_NAME);
 
-        session.removeAttribute(SessionAttrs.CHAT_USER_NAME);
+        session.removeAttribute(SessionConfig.CHAT_USER_NAME);
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }

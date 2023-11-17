@@ -1,11 +1,28 @@
 package com.trung.springredisapp.controller;
 
+import com.trung.springredisapp.config.SessionConfig;
+import com.trung.springredisapp.model.User;
+import com.trung.springredisapp.repository.UsersRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.google.gson.Gson;
+
+import java.util.*;
+import javax.servlet.http.HttpSession;
+import java.util.stream.Collectors;
 import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
-
     @Autowired
     private UsersRepository usersRepository;
 
@@ -34,12 +51,12 @@ public class UserController {
 
     @RequestMapping(value = "/me")
     public ResponseEntity<User> getMe(Model model, HttpSession session) {
-        String user = (String) session.getAttribute(SessionAttrs.CHAT_USER_NAME);
+        String user = (String) session.getAttribute(SessionConfig.CHAT_USER_NAME);
         if (user == null){
             return new ResponseEntity<>(null, HttpStatus.OK);
         }
         Gson gson = new Gson();
-        return new ResponseEntity<>(gson.fromJson(user, User.class), HttpStatus.OK);
+        return new ResponseEntity<User>(gson.fromJson(user, User.class), HttpStatus.OK);
     }
 
 
@@ -55,7 +72,6 @@ public class UserController {
         for(var onlineId : onlineIds) {
             User user = usersRepository.getUserById(onlineId);
             if (user == null){
-                LOGGER.debug("User not found by id: "+onlineId);
                 return new ResponseEntity<>(new HashMap<>(), HttpStatus.INTERNAL_SERVER_ERROR);
             }
             usersMap.put(String.valueOf(user.getId()), user);

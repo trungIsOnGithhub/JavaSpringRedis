@@ -1,4 +1,4 @@
-package com.trung.springredisapp.service;
+package com.trung.springredisapp.redis;
 
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;

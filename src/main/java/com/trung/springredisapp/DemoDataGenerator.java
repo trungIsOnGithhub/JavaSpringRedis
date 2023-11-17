@@ -6,7 +6,7 @@ import com.trung.springredisapp.model.User;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+// import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,8 +27,8 @@ public class DemoDataGenerator {
 
     private static final String DEMO_PASSWORD = "password123";
     private static final List<String> DEMO_USERNAME_LIST = Arrays.asList("User1", "User2", "User3", "User4");
-    private static final List<String> DEMO_GREETING_LIST = Arrays.asList("Hello", "Hi", "Yo", "Hola");
-    private static final List<String> DEMO_MESSAGES_LIST = Arrays.asList("Hello", "Hi", "Yo", "Hola");
+    private static final List<String> DEMO_GREETING_LIST = Arrays.asList("This is a test greeting 1", "This is a test greeting 2", "This is a test greeting message 3", "This is a test greeting message 4");
+    private static final List<String> DEMO_MESSAGES_LIST = Arrays.asList("Testing message with special character #!3729", "Testing message with number 23914", "Testing message with tab    ", "Testing message with new\nline");
 
     private void createDemoData() {
         // We store a counter for the total users and increment it on each register

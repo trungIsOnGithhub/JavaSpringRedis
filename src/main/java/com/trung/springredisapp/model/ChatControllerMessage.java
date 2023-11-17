@@ -1,12 +1,7 @@
 package com.trung.springredisapp.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import com.trung.springredisapp.payload.MessageType;
 
-@Getter
-@Setter
 public class ChatControllerMessage {
     private MessageType type;
     private User user;
@@ -15,7 +10,9 @@ public class ChatControllerMessage {
     public MessageType getType() {
         return this.type;
     }
-
+    public User getUser() {
+        return this.user;
+    }
     public String getData() {
         return this.data;
     }

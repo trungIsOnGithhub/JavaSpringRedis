@@ -1,20 +1,28 @@
 package com.trung.springredisapp.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NonNull;
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
-@Getter
-@Setter
 public class Message {
-    @NonNull
     private String from;
-    @NonNull
     private int date;
-    @NonNull
     private String message;
-    @NonNull
     private String roomId;
+
+    public String getRoomId() {
+        return this.roomId;
+    }
+    public String getMessage() {
+        return this.message;
+    }
+    public int getDate() {
+        return this.date;
+    }
+    public String getFrom() {
+        return this.from;
+    }
+
+    public Message(String from, int date, String message, String roomId) {
+        this.from = from;
+        this.date = date;
+        this.message = message;
+        this.roomId = roomId;
+    }
 }

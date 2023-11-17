@@ -6,7 +6,7 @@ Basic chat app in Java Spring Boot using Redis for concept demonstration of [pub
 
 #### For API documentation and(maybe demos): visit below link
 
-[Azure Web App](http://javaspringtest1.azurewebsites.net/)
+[Azure Web App](https://javaspringtest1.azurewebsites.net/index.html)
 
 #### How to run on local machine
 

@@ -24,7 +24,7 @@ or in Windows:
 If using command line, run the app with below command, auto reload included.
 ```./mvnw spring-boot:run```
 or in Windows:
-```.\mvnw.cmd spring-boot:run``
+```.\mvnw.cmd spring-boot:run```
 
 ##### Run Frontend detached
 

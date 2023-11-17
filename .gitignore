@@ -1,5 +1,7 @@
 build/
 target/[^c]*
+target/classes/com
+target/[^c]*/[^c]*/
 bin/
 interface/
 client/

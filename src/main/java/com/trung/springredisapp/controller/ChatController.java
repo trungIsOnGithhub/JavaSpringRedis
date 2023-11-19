@@ -76,17 +76,17 @@ public class ChatController {
 
     @RequestMapping(value = "/emit", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> get(@RequestBody ChatControllerMessage chatMessage) {
-        Gson gson = new Gson();
-        String serializedMessage;
+        String serializedMessage = "";
 
         if(chatMessage.getType() == MessageType.MESSAGE) {
             serializedMessage = handleRegularMessageCase(chatMessage);
         }
-        else if(chatMessage.getType() == MessageType.USER_CONNECTED || chatMessage.getType() == MessageType.USER_DISCONNECTED) {
+        else if(chatMessage.getType() == MessageType.USER_CONNECTED
+                || chatMessage.getType() == MessageType.USER_DISCONNECTED) {
             serializedMessage = handleUserConnectionCase(chatMessage);
         }
         else {
-            serializedMessage = gson.toJson(new PubSubMessage<>(chatMessage.getType().value(), chatMessage.getData()));
+            serializedMessage = (new Gson()).toJson(new PubSubMessage<>(chatMessage.getType().value(), chatMessage.getData()));
         }
 
         roomsRepository.sendMessageToRedis(topic.getTopic(), serializedMessage);

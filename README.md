@@ -87,10 +87,6 @@ Automatically fill up Redis database with demo data after checking if there are 
 
 #### How the data is stored:
 
-Each user has a set of rooms associated with them.
-
-
-
 - Rooms which user belongs too are stored at `user:{userId}:rooms` as a set of room ids.
 
   - E.g `SADD user:Alex:rooms 1`
@@ -125,9 +121,9 @@ After initialization, a pub/sub subscription is created: `SUBSCRIBE MESSAGES`.
 
 ### Session handling
 
-The chat server works as a basic _REST_ API which involves keeping the session and handling the user state in the chat rooms (besides the WebSocket/real-time part).
+The chat server works as a basic _REST_ API keeping the session and handling the user state in the chat rooms (besides the WebSocket/real-time part).
 
-When a WebSocket/real-time server is instantiated, which listens for the next events:
+When a WebSocket/real-time server is instantiated, which listens for events:
 
 ### Connection
 
@@ -150,3 +146,10 @@ Note we send additional data related to the type of the message and the server i
 #### How the data is stored / accessed:
 
 Connect to Redis by utilizing the [**Letuce**](https://github.com/lettuce-io/lettuce-core) client.
+
+
+#### References
+
+[Spring Docs](https://docs.spring.io/spring-data/redis/docs)
+[MDN web docs](https://developer.mozilla.org/en-US/docs/Web)
+[Baeldung](https://www.baeldung.com)

@@ -150,3 +150,4 @@ Note we send additional data related to the type of the message and the server i
 #### How the data is stored / accessed:
 
 Connect to Redis by utilizing the [**Letuce**](https://github.com/lettuce-io/lettuce-core) client.
+> [Reference](https://github.com/redis-developer/basic-redis-chat-app-demo-java)

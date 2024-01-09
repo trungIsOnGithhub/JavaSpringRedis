@@ -1,12 +1,13 @@
 # Basic Redis Chat App Demo (Java/Spring)
 
-Basic chat app in Java Spring Boot using Redis for concept demonstration of [pub/sub model](https://redis.io/docs/interact/pubsub/) and commons data structure.
+Basic chat app in Java Spring Boot using Redis for concept demonstration of [pub/sub model](https://redis.io/docs/interact/pubsub/) and common data structures.
 
 > Using Redis Server 6.0.16, JDK 17.0.2, VS Code, Maven 3.8.8
 
 #### For API documentation and(maybe demos): visit below link
 
 [Azure Web App](https://javaspringtest1.azurewebsites.net/index.html)
+[Client Code](https://github.com/trungIsOnGithhub/SpringRedisClient)
 
 #### How to run on local machine
 
